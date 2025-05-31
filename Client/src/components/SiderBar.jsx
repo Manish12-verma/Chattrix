@@ -79,7 +79,7 @@ const SiderBar = ({ selectedUser, setSelectedUser }) => {
               </p>
             )}
           </div>
-        ))}
+        ))} 
       </div>
     </div>
   );
