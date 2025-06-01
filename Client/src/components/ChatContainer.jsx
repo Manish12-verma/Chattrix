@@ -19,8 +19,8 @@ const ChatContainer = ({selectedUser,setSelectedUser}) => {
     </div>
   ) :(
     <div className='flex flex-col items-center justify-center gap-2 text-gray-500 bg-white/10  max-md:hidden'>
-      <img src={assets.chattrix_logo_png} alt="logo" className='max-w-16'/>
-      <p className='text-lg font-medium text-white'>Chat beyond limits!</p>
+      <img src={assets.chattrix_logo_png} alt="logo" className='max-w-40'/>
+      <p className='text-2xl font-bold pt-4 text-white'>Chat beyond limits!</p>
     </div>
   )
 }
