@@ -2,6 +2,7 @@ import React from 'react'
 import assets from '../assets/assets'
 import Chat from './Chat'
 
+
 const ChatContainer = ({selectedUser,setSelectedUser}) => {
   return selectedUser ? (
     <div className='h-full overflow-scroll relative backdrop-blur-lg '>
