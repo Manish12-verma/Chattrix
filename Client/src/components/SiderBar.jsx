@@ -27,7 +27,7 @@ const SiderBar = ({ selectedUser, setSelectedUser }) => {
               alt="menu_icon"
               className="max-h-5 cursor-pointer"
             />
-            <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#282142] border border-gray-600 text-gray-100 hidden group-hover:block">
+            <div className="absolute top-full right-0 z-20 w-32 p-5 rounded-md bg-[#4b5c64] border border-gray-600 text-gray-100 hidden group-hover:block">
               <p
                 onClick={() => {
                   navigate("/profile");
@@ -41,7 +41,7 @@ const SiderBar = ({ selectedUser, setSelectedUser }) => {
             </div>
           </div>
         </div>
-        <div className="bg-[#282142] rounded-full p-2 flex items-center gap-2">
+        <div className="bg-[#3c3f42] rounded-full p-2 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
