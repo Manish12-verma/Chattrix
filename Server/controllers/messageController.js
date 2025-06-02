@@ -37,3 +37,35 @@ export const getUsersForSidebar = async (req, res) => {
 };
  
 //Get all messages between two users
+export const getMessages = async(req,res)=>{
+    try {
+        const {id:selectedUserId} = req.params;
+        const myId = req.user._id;
+
+        const messages = await Message.find({
+            $or:[{
+                senderId: myId,
+                receiverId: selectedUserId
+            },{
+                senderId: selectedUserId,
+                receiverId: myId
+            }]
+        })
+        await Message.updateMany({
+             senderId: selectedUserId,
+             receiverId: myId,
+            },{
+                seen:true
+            })
+            res.status(200).json({
+                success:true,
+                messages
+            })
+    } catch (error) {
+        console.log("Error in getMessages:", error);
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
