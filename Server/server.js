@@ -35,11 +35,9 @@ io.on('connection', (socket) => {
     })
 })
 
-
 //middleware
 app.use(express.json({limit: '4mb'}));
 app.use(cors());
-
 
 //Route setup
 app.use("/api/status", (req, res) => (res.send("Server is running")))
