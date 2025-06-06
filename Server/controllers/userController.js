@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
-
+        
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt)
 
@@ -44,7 +44,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userData = await User.findOne({ email });
+        const userData = await User.findOne({email });
 
         const isPasswordValid = await bcrypt.compare(password, userData.password);
 
@@ -67,6 +67,8 @@ export const login = async (req, res) => {
 
 //controller to check if user is authenticated
 export const checkAuth = (req, res) => {
+    console.log("🔥 Inside checkAuth");
+    console.log("User from token:", req.user);
     res.status(200).json({
         success: true,
         user: req.user,

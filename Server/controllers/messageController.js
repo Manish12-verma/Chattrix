@@ -2,6 +2,7 @@ import Message from "../models/message.js";
 import User from "../models/User.js";
 import cloudinary from "../lib/cloudinary.js";
 import { userSocketMap, io } from "../server.js";
+import mongoose from "mongoose";
 
 //Get all user except the logged-in user
 export const getUsersForSidebar = async (req, res) => {
@@ -14,6 +15,7 @@ export const getUsersForSidebar = async (req, res) => {
     //count number of unseen msg
     const unseenMessages = {};
     const promises = filteredUsers.map(async (user) => {
+      console.log("Comparing senderId:", user._id, "receiverId:", userId);
       const messages = await Message.find({
         senderId: user._id,
         receiverId: userId,
@@ -43,6 +45,13 @@ export const getMessages = async (req, res) => {
   try {
     const { id: selectedUserId } = req.params;
     const myId = req.user._id;
+    
+    if (!mongoose.Types.ObjectId.isValid(selectedUserId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID format"
+      });
+    }
 
     const messages = await Message.find({
       $or: [{
@@ -123,7 +132,7 @@ export const sendMessage = async (req, res) => {
 
   } catch (error) {
      console.log("Error in sendMessage:", error);
-    res.status(500).json({
+      res.status(500).json({
       success: false,
       message: error.message, 
     });
