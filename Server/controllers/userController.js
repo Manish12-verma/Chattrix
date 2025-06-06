@@ -67,11 +67,10 @@ export const login = async (req, res) => {
 
 //controller to check if user is authenticated
 export const checkAuth = (req, res) => {
-    console.log("🔥 Inside checkAuth");
-    console.log("User from token:", req.user);
+
     res.status(200).json({
         success: true,
-        user: req.user,
+        userData: req.user,
         message: "User is authenticated",
     });
 }
