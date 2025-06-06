@@ -29,8 +29,7 @@ const Login = () => {
     
     if(success) {
     navigate("/"); 
-  }
-
+    }
   };
 
   return (
