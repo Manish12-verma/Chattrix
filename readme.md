@@ -5,18 +5,18 @@ Chattrix is a real-time chat application built with the MERN stack (MongoDB, Exp
 ## Live Demo
 
 You can try Chattrix live here:  
-**[Live App Link](https://your-live-app-link.com)**
+**[Live App Link](https://chattrix-tan.vercel.app/login)**
 
 ## Screenshots
 
 ### Login Page
-![Login Page](./screenshots/login.png)
+![Login Page](./Client/public/login.png)
 
 ### Chat Interface
-![Chat Interface](./screenshots/chat.png)
+![Chat Interface](./Client/public/chatInterface.png)
 
 ### Profile Page
-![Profile Page](./screenshots/profile.png)
+![Profile Page](./Client/public/profile.png)
 
 ## Features
 
