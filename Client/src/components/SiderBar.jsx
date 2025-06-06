@@ -1,13 +1,33 @@
-import React, { useContext } from "react";
-import assets, { userDummyData } from "../assets/assets";
+import React, { useContext, useEffect, useState } from "react";
+import assets from "../assets/assets";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { ChatContext } from "../../context/ChatContext";
 
-const SiderBar = ({ selectedUser, setSelectedUser }) => {
-
-  const {logout} = useContext(AuthContext);
+const SiderBar = () => {
+  const {
+    getUsers,
+    users,
+    selectedUser,
+    setSelectedUser,
+    unseenMessages,
+    setUnseenMessages,
+  } = useContext(ChatContext);
+  const { logout, onlineUsers } = useContext(AuthContext);
+  const [input, setInput] = useState(false);
 
   const navigate = useNavigate();
+
+  const filteredUsers = input
+    ? users.filter((user) =>
+        user.fullName.toLowerCase().includes(input.toLowerCase())
+      )
+    : users;
+
+  useEffect(() => {
+    console.log("onlineUsers changed:", onlineUsers);
+    getUsers();
+  }, [onlineUsers]);
 
   return (
     <div
@@ -41,7 +61,9 @@ const SiderBar = ({ selectedUser, setSelectedUser }) => {
                 Edit Profile
               </p>
               <hr className="my-2 border-t border-gray-500" />
-              <p className="cursor-pointer text-sm" onClick={()=>logout()}>Logout</p>
+              <p className="cursor-pointer text-sm" onClick={() => logout()}>
+                Logout
+              </p>
             </div>
           </div>
         </div>
@@ -59,34 +81,47 @@ const SiderBar = ({ selectedUser, setSelectedUser }) => {
             type="text"
             placeholder="Search User..."
             className="w-full h-full outline-none text-white placeholder-gray-500 text-sm"
+            onChange={(e) => setInput(e.target.value)}
           />
         </div>
       </div>
 
       <div className="flex flex-col">
-        {userDummyData.map((user, index) => (
-          <div className={`relative flex items-center gap-2 p-2 rounded max-sm:text-sm hover:bg-[#282142] cursor-pointer ${selectedUser?._id ===user._id &&  "bg-[#282142]/50" }`} key={index} onClick={() => setSelectedUser(user)}>
+        {filteredUsers.map((user, index) => (
+          <div
+            className={`relative flex items-center gap-2 p-2 rounded max-sm:text-sm hover:bg-[#282142] cursor-pointer ${
+              selectedUser?._id === user._id ? "bg-[#282142]/50" : ""
+            }`}
+            key={index}
+            onClick={() => {
+              setSelectedUser(user);
+              setUnseenMessages((prev) => ({ ...prev, [user._id]: 0 }));
+            }}
+          >
             <img
-              src={user?.profilePic || assets.avatar_icon}  // Fallback to avatar_icon if profilePic is not available
+              src={user?.profilePic || assets.avatar_icon}
               alt=""
               className="w-[35px] aspect-[1/1] rounded-full"
             />
 
             <div className="flex flex-col leading-5">
               <p>{user.fullName}</p>
-              {index < 3 ? (
+              {onlineUsers.includes(user._id) ? (
                 <span className="text-green-400 text-xs">Online</span>
               ) : (
                 <span className="text-neutral-400 text-xs">Offline</span>
               )}
             </div>
-            {index > 2 && (
-              <p className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full" style={{ backgroundColor: '#1db5b5' }}>
-                {index}
+            {unseenMessages[user._id] > 0 && (
+              <p
+                className="absolute top-4 right-4 text-xs h-5 w-5 flex justify-center items-center rounded-full"
+                style={{ backgroundColor: "#1db5b5" }}
+              >
+                {unseenMessages[user._id]}
               </p>
             )}
           </div>
-        ))} 
+        ))}
       </div>
     </div>
   );

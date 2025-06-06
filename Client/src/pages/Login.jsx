@@ -26,7 +26,7 @@ const Login = () => {
       password,
       bio
     });
-    console.log("Login success:", success); // ✅ Add this
+    
     if(success) {
     navigate("/"); 
   }
